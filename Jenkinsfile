@@ -1,8 +1,6 @@
 pipeline {
-    agent {
-        label 'windows-agent' // Specify the label for your Windows agent
-    }
-
+    agent any
+    
     environment {
         AWS_DEFAULT_REGION = 'us east'
         AWS_ACCOUNT_ID = '251126721760'
