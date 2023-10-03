@@ -17,7 +17,7 @@ pipeline {
         stage('Build and Push Docker Images') {
             steps {
                 script {
-                    def dockerComposeFile = 'docker-compose.yml'
+                    def dockerComposeFile = './docker-compose.yml'
 
                     // Build and push each container image defined in docker-compose.yml
                     sh "docker-compose -f ${dockerComposeFile} build"
