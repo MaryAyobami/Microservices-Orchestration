@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  users:
+    image: users
+    build:
+      context: services/users
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+
+  posts:
+      image: posts
+      build:
+        context: services/posts
+        dockerfile: ./Dockerfile
+      environment:
+        NODE_ENV: production
+      ports:
+        - 4000:4000
+
+  threads:
+      image: threads
+      build:
+        context: services/threads
+        dockerfile: ./Dockerfile
+      environment:
+        NODE_ENV: production
+      ports:
+        - 8000:8000
