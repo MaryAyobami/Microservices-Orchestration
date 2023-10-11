@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        AWS_DEFAULT_REGION = 'us east'
+        AWS_DEFAULT_REGION = 'us-east'
         AWS_ACCOUNT_ID = '251126721760'
         ECR_REPO_NAME = 'microservices'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
