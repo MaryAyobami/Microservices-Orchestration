@@ -14,7 +14,15 @@ pipeline {
                 checkout scm
             }
         }
-
+        stage('Logging into AWS ECR') {
+            steps {
+                script {
+                 bat "aws ecr get-login-password - region ${AWS_DEFAULT_REGION} | docker login - username AWS - password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                }
+            
+            }
+        }
+ 
         stage('Build and Push Docker Images') {
             steps {
                 script {
@@ -23,12 +31,12 @@ pipeline {
                    // bat "docker-compose -f %DOCKER_COMPOSE_FILE% push"
 
                     // Authenticate and create the ECR repository (if it doesn't exist)
-                    withAWS(credentials: 'your-aws-credentials-id', region: AWS_DEFAULT_REGION) {
-                        try {
-                            bat "aws ecr create-repository --repository-name %ECR_REPO_NAME%"
-                        } catch (Exception e) {
-                            echo "ECR repository already exists."
-                        }
+                    // withAWS(credentials: 'your-aws-credentials-id', region: AWS_DEFAULT_REGION) {
+                    //     try {
+                    //         bat "aws ecr create-repository --repository-name %ECR_REPO_NAME%"
+                    //     } catch (Exception e) {
+                    //         echo "ECR repository already exists."
+                    //     }
 
                         // Tag and push each image to ECR
                         bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker tag \$_:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
