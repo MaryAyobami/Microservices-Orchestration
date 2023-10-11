@@ -20,7 +20,7 @@ pipeline {
                 script {
                     // Build and push each container image defined in docker-compose.yml
                     bat "docker-compose -f %DOCKER_COMPOSE_FILE% build"
-                    bat "docker-compose -f %DOCKER_COMPOSE_FILE% push"
+                   // bat "docker-compose -f %DOCKER_COMPOSE_FILE% push"
 
                     // Authenticate and create the ECR repository (if it doesn't exist)
                     withAWS(credentials: 'your-aws-credentials-id', region: AWS_DEFAULT_REGION) {
