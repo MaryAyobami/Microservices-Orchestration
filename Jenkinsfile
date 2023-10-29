@@ -41,10 +41,15 @@ pipeline {
                         // Tag and push each image to ECR
                         // bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker tag \$_:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
                         // bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
-                        app = docker.build("microservices")
+                        // app = docker.build("microservices")
                         docker.withRegistry('http://251126721760.dkr.ecr.us-east-1.amazonaws.com/microservices', 'ecr:us-east-1:251126721760') {
-                        app.push("${env.BUILD_ID}")
-                        app.push("latest")
+                        // app.push("${env.BUILD_ID}")
+                        // app.push("latest")
+                         //build image
+                        def customImage = docker.build("my-image:${env.BUILD_ID}")
+
+                        //push image
+                        customImage.push()
 
                         }
                 }
