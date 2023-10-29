@@ -46,10 +46,10 @@ pipeline {
                         app.push("${env.BUILD_ID}")
                         app.push("latest")
 
-                    }
+                        }
                 }
             }
-        
+        }
 
         stage('Cleanup') {
             steps {
