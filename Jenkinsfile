@@ -9,7 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
                 checkout scm
             }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // Build and push each container image defined in docker-compose.yml
-                    bat "docker-compose -f %DOCKER_COMPOSE_FILE% build"
+                    // bat "docker-compose -f %DOCKER_COMPOSE_FILE% build"
                    // bat "docker-compose -f %DOCKER_COMPOSE_FILE% push"
 
                     // Authenticate and create the ECR repository (if it doesn't exist)
@@ -39,8 +39,13 @@ pipeline {
                     //     }
 
                         // Tag and push each image to ECR
-                        bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker tag \$_:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
-                        bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
+                        // bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker tag \$_:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
+                        // bat "docker-compose -f %DOCKER_COMPOSE_FILE% config --services | ForEach-Object { docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPO_NAME}:\$_ }"
+                        app = docker.build("microservices")
+                        docker.withRegistry('http://251126721760.dkr.ecr.us-east-1.amazonaws.com/microservices', 'ecr:us-east-1:251126721760') {
+                        app.push("${env.BUILD_ID}")
+                        app.push("latest")
+
                     }
                 }
             }
