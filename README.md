@@ -93,27 +93,3 @@ You can delete when you've finished the pod with the command `kubectl delete pod
 
 You can test this application by running the script `./utils/make_prediction.sh`, remember that depending on the input the model returns a price prediction on a house in Boston. In the script above there is a default json (you can change it) input:
 
-```json
-{  
-   "CHAS":{  
-      "0":0
-   },
-   "RM":{  
-      "0":9.575
-   },
-   "TAX":{  
-      "0":296.0
-   },
-   "PTRATIO":{  
-      "0":15.3
-   },
-   "B":{  
-      "0":396.9
-   },
-   "LSTAT":{  
-      "0":4.98
-   }
-}
-```
-
-with the `curl` command on port 5000 (you can switch to 80 if running on the standalone way). You can test with this input but if you want change it, please remember read more about the data (parameters that you can use in an input) on Kaggle, [data source site](https://www.kaggle.com/c/boston-housing)
